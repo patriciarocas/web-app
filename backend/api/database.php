@@ -3,7 +3,7 @@ include_once 'connect.php';
 
 $queries = array( // declare here all the queries
     'recipe'  => 'select * from recipe',
-   
+    
 ); 
 
 if (!empty($argv)) { // for debug scenario, command line get params

@@ -3,5 +3,6 @@ export interface Recipe{
     name_recipe:string;
     ingredients:string;
     description:string;
+    macros:string;
     image:symbol;
 }

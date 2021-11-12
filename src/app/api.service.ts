@@ -12,12 +12,16 @@ export class ApiService {
   private baseUrl = "http://localhost/web-app/backend/api/";
 
   private GET_ALL_RECIPES_URL = `${this.baseUrl}database.php?query=recipe`;
+  private GET_RECIPE_BY_ID_URL = `${this.baseUrl}database.php?query=recipe`;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+   }
 
   
   getAllRecipes(): Observable<any> {
     return this.http.get<any>(this.GET_ALL_RECIPES_URL);
   }
+
+
 }
 
