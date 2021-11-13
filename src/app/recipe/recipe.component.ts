@@ -11,8 +11,6 @@ export class RecipeComponent implements OnInit {
 
   recipe: Recipe[] =[];
   rating = 0; 
-  currentRecipe = null; 
-  id = null;
 
   constructor(private apiService: ApiService) { }
 
