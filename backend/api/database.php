@@ -2,8 +2,10 @@
 include_once 'connect.php';
 
 $queries = array( // declare here all the queries
-    'recipe'  => 'select * from recipe',
-    
+    'recipe'         => 'select * from recipe',
+    'new-recipe'     => 'insert into recipe(name_recipe, ingredients, description, macros, image) values(?, ?, ?, ?, ?)',
+    'set-recipe'     => 'update recipe set name_recipe=?, ingredients=?, description=?, macros=?, image=? where id_recipe=?',
+    'remove-recipe'  => 'delete from recipe where id_recipe = :id_recipe '
 ); 
 
 if (!empty($argv)) { // for debug scenario, command line get params
@@ -13,7 +15,7 @@ if (!empty($argv)) { // for debug scenario, command line get params
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     if (!(array_key_exists("query", $_GET))) {
         header('HTTP/1.1 400 Bad Request {"query": "param <query> is required"}');
-        exit;
+        exit; 
     }
     $queryKey = $_GET["query"];
 } else {
@@ -23,7 +25,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
         exit;
     }
     $queryKey = $_POST["query"];
-}
+} 
 
 while ($query = current($queries)) {
     if (key($queries) == $queryKey) {
@@ -39,6 +41,7 @@ while ($query = current($queries)) {
             foreach ($values as $key => $value) {
                 $params[]=$value;
             }
+         //   echo "PARAMS   : ", $params, "   QUERY   : ", $query;
             mysql::query($query, $params);
         } else {
             mysql::query($query);

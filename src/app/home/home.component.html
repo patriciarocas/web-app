@@ -22,7 +22,7 @@
   <div id="card">
     <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
       <div class="carousel-inner">
-        <!-- ngfor loop using get dynamic value and ngclass for add acive class -->
+        <!-- ngfor loop using get dynamic value and ngclass for add active class -->
         <div class="carousel-item" *ngFor="let result of data; let i = index" [ngClass]="{'active': i === 1}">
           <img src={{result.img}} title={{result.title}}  />
         </div>

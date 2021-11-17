@@ -2,11 +2,11 @@
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
     padding: 15px;
     background-color: #ffffff;
-    margin: 20px;
-    margin-left: 300px;
+    margin-left: 200px;
+    margin-right: 200px;
     justify-content:center;
     display: flex;
-    width:700px;
+    
  
   }
   h1{

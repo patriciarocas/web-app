@@ -2,36 +2,171 @@
 <html lang="en">
 
 <head>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
-        integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
-        integrity="sha512-SfTiTlX6kk+qitfevl/7LibUOeJWlt9rbyDn92a1DqWOw9vWG2MFoays0sgObmWazO5BQPiFucnnEAjpAB+/Sw=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+    integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    integrity="sha512-SfTiTlX6kk+qitfevl/7LibUOeJWlt9rbyDn92a1DqWOw9vWG2MFoays0sgObmWazO5BQPiFucnnEAjpAB+/Sw=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 
 <body>
-    <div class="container">
-        <div class="row">   
-          <div class="col-md-6">
-            <form (ngSubmit)="adminLogin()">
-              <div class="form-group">
-                <label for="email">Email:</label>
-                <input [(ngModel)]="model.email" type="email" class="form-control" id="email" placeholder="Enter email"
-                  name="email" required>
-    
+  <!-- Admin login -->
+  <div class="panel panel-info">
+    <div class="panel-heading">
+      <h4 style="text-align:center">Login</h4>
+    </div>
+    </div>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6">
+        <form (ngSubmit)="adminLogin()">
+          <div class="form-group">
+            <label for="email">Email:</label>
+            <input [(ngModel)]="model.email" type="email" class="form-control" id="email" placeholder="Enter email"
+              name="email" required>
+
+          </div>
+          <div class="form-group">
+            <label for="pwd">Password:</label>
+            <input [(ngModel)]="model.password" type="password" class="form-control" id="pwd"
+              placeholder="Enter password" name="password" required>
+          </div>
+          <button type="submit" class="signinbtn">Sign-in</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Add recipe -->
+  <div class="panel panel-info">
+    <div class="panel-heading">
+      <h4 style="text-align:center">Add Recipe</h4>
+    </div>
+  </div>
+  <div class="container">
+    <form name="form" #f="ngForm" (ngSubmit)="f.form.valid && addRecipe()">
+      <div class="row">
+        <div class="col-md-6">
+          <!--Recipe name -->
+          <div class="form-group">
+            <label for="name_recipe">Recipe Name</label>
+            <input type="text" id="name_recipe" class="form-control" name="name_recipe" placeholder="Recipe Name"
+              [(ngModel)]="modelRec.name_recipe" #name_recipe="ngModel"
+              [ngClass]="{ 'is-invalid': f.submitted && name_recipe.invalid }" required name_recipe />
+            <!-- input validation group -->
+            <div *ngIf="f.submitted && name_recipe.invalid" class="invalid-input">
+              <!-- individual validation errors -->
+              <div *ngIf="name_recipe.errors?.['required']">Field is required</div>
+            </div>
+
+            <!-- Ingredients -->
+            <div class="form-group">
+              <label for="ingredients">Ingredients</label>
+              <input type="text" id="ingredients" class="form-control" name="ingredients"
+                placeholder="Recipe ingredients" [(ngModel)]="modelRec.ingredients" #ingredients="ngModel"
+                [ngClass]="{ 'is-invalid': f.submitted && ingredients.invalid }" required ingredients />
+              <!-- input validation group -->
+              <div *ngIf="f.submitted && ingredients.invalid" class="invalid-input">
+                <!-- individual validation errors -->
+                <div *ngIf="ingredients.errors?.['required']">Field is required</div>
               </div>
-              <div class="form-group">
-                <label for="pwd">Password:</label>
-                <input [(ngModel)]="model.password" type="password" class="form-control" id="pwd"
-                  placeholder="Enter password" name="password" required>
+            </div>
+
+            <!-- Description -->
+            <div class="form-group">
+              <label for="description">Hire Date</label>
+              <input type="text" id="description" class="form-control" name="description"
+                placeholder="Recipe description" [(ngModel)]="modelRec.description" #description="ngModel"
+                [ngClass]="{ 'is-invalid': f.submitted && description.invalid }" required description />
+              <!-- input validation group -->
+              <div *ngIf="f.submitted && description.invalid" class="invalid-input">
+                <!-- individual validation errors -->
+                <div *ngIf="description.errors?.['required']">Field is required</div>
               </div>
-              <button  type="submit" class="signinbtn">Sign-in</button>
-            </form>
+            </div>
+
+            <!-- Macros-->
+            <div class="form-group">
+              <label for="macros">Macros</label>
+              <input type="text" id="macros" class="form-control" name="macros" placeholder="Recipe Macros"
+                [(ngModel)]="modelRec.macros" #macros="ngModel"
+                [ngClass]="{ 'is-invalid': f.submitted && macros.invalid }" required macros />
+              <!-- input validation group -->
+              <div *ngIf="f.submitted && macros.invalid" class="invalid-input">
+                <!-- individual validation errors -->
+                <div *ngIf="macros.errors?.['required']">Field is required</div>
+              </div>
+            </div>
+
+            <!-- Image-->
+            <div class="form-group">
+              <label for="image">Image</label>
+              <input type="text" id="image" class="form-control" name="image" placeholder="Image path"
+                [(ngModel)]="modelRec.image" #image="ngModel" [ngClass]="{ 'is-invalid': f.submitted && image.invalid }"
+                required image />
+              <!-- input validation group -->
+              <div *ngIf="f.submitted && image.invalid" class="invalid-input">
+                <!-- individual validation errors -->
+                <div *ngIf="image.errors?.['required']">Field is required</div>
+              </div>
+            </div>
+            <button type="submit" class="btn btn-info pull-right"> Submit
+            </button>
           </div>
         </div>
       </div>
+    </form>
+  </div>
+
+  <!-- Update recipe -->
+  <div class="panel panel-info">
+  <div class="panel-heading">
+    <h4 style="text-align:center">Update Recipe</h4>
+  </div>
+<!-- </div>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <form name="form" #f="ngForm">
+          <div class="row mt-2">
+            <div class="col-md-6"><label class="labels">Recipe Name</label>
+              <input type="text" id="name_recipeUP" class="form-control" name="name_recipe"
+                [(ngModel)]='currentRecipe.name_recipe' />
+            </div>
+          </div>
+          <div class="row mt-2">
+            <div class="col-md-6"><label class="labels">Ingredients</label>
+              <input type="text" id="ingredientsUP" class="form-control" name="ingredients"
+                [(ngModel)]='currentRecipe.ingredients' />
+            </div>
+          </div>
+          <div class="row mt-2">
+            <div class="col-md-6"><label class="labels">Description</label>
+              <input type="text" id="descriptonUP" class="form-control" name="description"
+                [(ngModel)]='currentRecipe.description' />
+            </div>
+          </div>
+          <div class="row mt-2">
+            <div class="col-md-6"><label class="labels">Macros</label>
+              <input type="text" id="macrosUP" class="form-control" name="macros"
+                [(ngModel)]='currentRecipe.macros' />
+            </div>
+          </div>
+          <div class="row mt-2">
+            <div class="col-md-6"><label class="labels">Image</label>
+              <input type="text" id="imageUP" class="form-control" name="assistant"
+                [(ngModel)]='currentRecipe.image' />
+            </div>
+          </div>
+          <br>
+          <br>
+            <button class="btn btn-primary" (click)="updateRecipe(currentRecipe)" 
+              type="button">Save Changes</button>
+        </form>
+      </div>
+    </div>-->
+</div>
+
 </body>
-
-
 
 </html>

@@ -1,4 +1,5 @@
 <?php
+
 class mysql
 {
     // property declaration credentials
@@ -24,6 +25,7 @@ class mysql
     // method declaration
     public static function query($sql, $params=null)
     {
+      //  echo "SQL : ", $sql, "  params  : ", $params;
         $stmt = self::$conn->prepare($sql);
         $rows = array();
         $result = null;
@@ -35,8 +37,10 @@ class mysql
         }
         if (!empty($params)) {
             $types = str_repeat('s', count($params)); // bind all as string
+           // echo "TYPES   : ", $types, " PARAMS   : ", print_r($params);
             $stmt->bind_param($types, ...$params); // bind array at once;
-        }
+           // echo "STMT  : ", print_r($stmt);
+        } 
         $stmt->execute();
         $result = $stmt->get_result();
         if (!empty($result)) { // SELECT || stored procedure
