@@ -14,7 +14,7 @@
 
 <body>
     <nav class="navbar navbar-expand-md navbar-dark bg-danger">
-        <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
+        <div class="navbar-collapse collapse w-100 ">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item active">
                     <a class="nav-link fa fa-home" routerLink="/home">Home</a>
@@ -23,12 +23,16 @@
                     <a class="nav-link fa fa-bookmark" routerLink="/about">About</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link fa fa-login" routerLink="/admin">Log Admin</a>
+                    <a class="nav-link fa fa-sign-in" routerLink="/login"> Admin</a>
+                </li>
+                <li class="nav-item" *ngIf="isLogged">
+                    <a class="nav-link fa fa-sign-out" routerLink="/home" (click)="logoutAdmin()"> Log-out</a>
                 </li>
             </ul>
         </div>
         <div class="mx-auto order-0">
-            <a class="navbar-brand mx-auto" href="#">CAKE App</a>
+            <i class="navbar-brand mx-auto" >CAKE App</i>
+            <img  src="https://img.icons8.com/external-photo3ideastudio-lineal-color-photo3ideastudio/64/000000/external-cake-food-delivery-photo3ideastudio-lineal-color-photo3ideastudio.png" />
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".dual-collapse2">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -36,7 +40,7 @@
         <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item">
-                    <a class="nav-link fa fa-bars" onclick="getAllRecipes()" routerLink="/recipe">Recipes</a>
+                    <a class="nav-link fa fa-bars" routerLink="/recipe">Recipes</a>
                 </li>
             </ul>
         </div>

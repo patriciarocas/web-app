@@ -37,7 +37,7 @@ class mysql
         }
         if (!empty($params)) {
             $types = str_repeat('s', count($params)); // bind all as string
-           // echo "TYPES   : ", $types, " PARAMS   : ", print_r($params);
+           //echo "TYPES   : ", $types, " PARAMS   : ", print_r($params);
             $stmt->bind_param($types, ...$params); // bind array at once;
            // echo "STMT  : ", print_r($stmt);
         } 

@@ -1,4 +1,16 @@
-#card {
-    display:inline-flex;
-    margin-left: 250px;
+
+.carousel{
+  display: flex;
+  align-items: flex-start;
   }
+.carousel  div {
+  flex: 1;
+}
+.carousel-item{
+  align-self: center;
+}
+#img-id{
+  display: flex;
+  margin-left: auto;
+  margin-right: auto;
+}

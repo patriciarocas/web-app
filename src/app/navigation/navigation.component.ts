@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { ApiService } from '../api.service';
 
 
 @Component({
@@ -9,9 +10,14 @@ import { Router } from '@angular/router';
 })
 export class NavigationComponent implements OnInit {
 
-  constructor(private router: Router) { }
+  isLogged!: boolean;
+
+  constructor(private router: Router, private apiService: ApiService) { }
 
   ngOnInit(): void {
   }
 
+
+  logoutAdmin(){
+  }
 }

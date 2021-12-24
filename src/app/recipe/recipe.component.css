@@ -1,14 +1,23 @@
-.card{
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-    padding: 15px;
-    background-color: #ffffff;
-    margin-left: 200px;
-    margin-right: 200px;
-    justify-content:center;
-    display: flex;
-    
- 
-  }
-  h1{
-    text-align: center;
-  }
+.img-container {
+  display:flex;
+  flex-wrap: wrap;
+  align-content: space-evenly;
+  padding: 10px;
+  text-align:center;
+  border: 1px solid red;
+  margin-top: 10px;
+}
+ .div{
+   display: inline-flex;
+   width: 100%;
+ }
+ .row{
+   width: 50%;
+ }
+ .container{
+   margin: 20px;
+   width: 50%;
+ }
+ .btn{
+   width: 100%;
+ }

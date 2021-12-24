@@ -2,18 +2,27 @@
 include_once 'connect.php';
 
 $queries = array( // declare here all the queries
-    'recipe'         => 'select * from recipe',
-    'new-recipe'     => 'insert into recipe(name_recipe, ingredients, description, macros, image) values(?, ?, ?, ?, ?)',
-    'set-recipe'     => 'update recipe set name_recipe=?, ingredients=?, description=?, macros=?, image=? where id_recipe=?',
-    'remove-recipe'  => 'delete from recipe where id_recipe = :id_recipe '
+    'recipe'         => 'select * from recipe', //get
+    'get-recipeId'   => 'select * from recipe where id_recipe = ?', //get recipe by id
+    'new-recipe'     => 'insert into recipe(name_recipe, ingredients, description, macros, image) values(?, ?, ?, ?, ?)', //add
+    'set-recipe'     => 'update recipe set name_recipe=?, ingredients=?, description=?, macros=?, image=? where id_recipe=?', //update
+    'remove-recipe'  => 'delete from recipe where id_recipe = ? ', //remove
+    'get-comm'       => 'select name_user, comments from user where id_recipe = ?', //get comm
+    'add-comm'       => 'insert into user(name_user, email, comments, id_recipe, date ) values (?, ?, ?, ?, ?)', //add comm
+    'get-admin'      => 'select * from admin where email=? and password=?',
+
 ); 
+
+
+// echo 'The method is : ',  $_SERVER['REQUEST_METHOD'] == 'GET' ? "GET":"POST", "\n";
+// exit();
 
 if (!empty($argv)) { // for debug scenario, command line get params
     parse_str(implode('&', array_slice($argv, 1)), $_GET);
 }
 
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {
-    if (!(array_key_exists("query", $_GET))) {
+    if (!(array_key_exists("query", $_GET))) { 
         header('HTTP/1.1 400 Bad Request {"query": "param <query> is required"}');
         exit; 
     }
@@ -35,13 +44,14 @@ while ($query = current($queries)) {
                 array_shift($_GET);
                 $values = $_GET;
             } else {
-                array_shift($_POST);
+                // array_shift($_POST);
+                unset($_POST['query']); // delete element by key
                 $values = $_POST;
             }
             foreach ($values as $key => $value) {
                 $params[]=$value;
             }
-         //   echo "PARAMS   : ", $params, "   QUERY   : ", $query;
+         // echo "PARAMS   : ", $params, "   QUERY   : ", $query;
             mysql::query($query, $params);
         } else {
             mysql::query($query);

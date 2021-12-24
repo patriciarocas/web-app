@@ -10,59 +10,91 @@
 </head>
 
 <body>
-    <div *ngFor="let item of recipe">
-        <div class="card">
-            <img class="card-img-top" [src]="item.image" alt="Card image cap">
-            <div class="card-body">
-                <h5 class="card-title">{{item.name_recipe}}</h5>
-                <p class="card-text"></p>
-                <h6>Ingredients</h6>
-               <small style="text-align:justify">{{item.ingredients}}</small  >
-            </div>
-            <div class="card-footer">
-                <small class="text-muted">
-                    <h6>Step-by-step instruction</h6> 
-                    <p style="text-align:justify">{{item.description}}</p>
-                </small>
-            </div>
-            <div>
-                <small style="text-align:justify">
-                    {{item.macros}}
-                </small>
-            </div>
-            <br>
-            <label for="">GIVE YOUR OPINION!</label>
-            <textarea id="w3review" name="w3review" rows="4" cols="50">
-              Leave your comment here
-              </textarea>
-            <br>
-            <div>
-                <ng-container *ngIf="rating === 0">
-                    <span class="fa fa-star-o" data-jest="empty star"></span>
-                    <span class="fa fa-star-o" data-jest="empty star"></span>
-                    <span class="fa fa-star-o" data-jest="empty star"></span>
-                    <span class="fa fa-star-o" data-jest="empty star"></span>
-                    <span class="fa fa-star-o" data-jest="empty star"></span>
-                </ng-container>
-                <p>Rate: <strong>{{rating}}</strong></p>
-            </div>
-            <br>
-            <p>Fill in your details below to login</p>
-            <form #loginForm="ngForm">
-                <div class="form-group">
-                    <label for="email">Email:</label>
-                    <input type="email" class="form-control" id="email" placeholder="Enter email" name="email" required>
-
+    <div class="div">
+        <div class="row">
+            <div *ngFor="let item of recipe" class="col-md-3 img-container" (click)="getRecipeById(item)"
+                style="cursor:pointer">
+                <img class="card-img-top" [src]="item.image" alt="Card image cap">
+                <div class="card-body">
+                    <h5 class="card-title">{{item.name_recipe}}</h5>
                 </div>
-                <div class="form-group">
-                    <label for="name">Name:</label>
-                    <input type="name" class="form-control" id="name" placeholder="Enter name" name="name" required>
-                </div>
-            </form>
-            <br>
-            <input type="submit" value="Submit">
+            </div>
         </div>
-        <hr>
+        <!-- display recipe by id to users when click image -->
+        <div class="container">
+            <div class="card" *ngIf="!recipeId">
+                <img src="assets/images.jpg"><br>
+                <b>Feel free to try this beautiful recipes</b>
+                <p> Just click on the image of the desired recipe and let yourself be carried away by the culinary
+                    desires.
+                </p>
+            </div>
+            <div *ngIf="recipeId" style="text-align:justify">
+                <div class="card-body">
+                    <img class="card-img-top" [src]="recipeId.image" alt="Card image cap">
+                    <h5 style="text-align:center">{{recipeId.name_recipe}}</h5>
+                    <p class="card-text"></p>
+                    <h6>Ingredients</h6>
+                    <small style="text-align:justify">{{recipeId.ingredients}}</small>
+                </div>
+                <div class="card-footer">
+                    <small class="text-muted">
+                        <h6>Step-by-step instruction</h6>
+                        <p style="text-align:justify">{{recipeId.description}}</p>
+                    </small>
+                </div>
+                <div>
+                    <small style="text-align:justify">
+                        {{recipeId.macros}}
+                    </small>
+                </div>
+                <hr>
+                <p style="text-align: center;">Comments </p> 
+                <div *ngFor="let comm of commentsByRecipe">
+                    <i class='fa fa-user-circle'></i>
+                    {{comm.name_user}}
+                    <small>
+                        <p style="font-family: Arial; font-size: 10px;">
+                            Date: {{currentDate | date:'dd-MM-yyyy'}}</p>
+                    </small>
+                        <ul>{{comm.comments}} </ul>
+                    <hr>
+                </div>
+                <!-- Add comment to recipe -->
+                <label>GIVE YOUR OPINION!</label>
+                <form name="form" #f="ngForm" (ngSubmit)="f.form.valid && addComment()">
+                    <textarea id="comment" name="comment" rows="4" cols="50 " [(ngModel)]="model.comments">
+                    </textarea>
+                    <br>
+                    <p>Fill in your details below to login</p>
+                    <div class="form-group">
+                        <label for="email">Email:</label>
+                        <input type="email" class="form-control" id="email" placeholder="Enter email" name="email"
+                            [(ngModel)]="model.email" #email="ngModel"
+                            [ngClass]="{ 'is-invalid': f.submitted && email.invalid }" required email />
+                        <!-- input validation group -->
+                        <div *ngIf="f.submitted && email.invalid" class="invalid-input">
+                            <!-- individual validation errors -->
+                            <div *ngIf="email.errors?.['required']">Field is required</div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="name">Name:</label>
+                        <input type="name" class="form-control" id="name" placeholder="Enter name" name="name"
+                            [(ngModel)]="model.name_user" #name_user="ngModel"
+                            [ngClass]="{ 'is-invalid': f.submitted && name_user.invalid }" required name_user />
+                        <!-- input validation group -->
+                        <div *ngIf="f.submitted && name_user.invalid" class="invalid-input">
+                            <!-- individual validation errors -->
+                            <div *ngIf="name_user.errors?.['required']">Field is required</div>
+                        </div>
+                    </div>
+                    <br>
+                    <button class="btn btn-success" type="submit"> Submit</button>
+                    <br>
+                </form>
+            </div>
+        </div>
     </div>
     <br>
     <p style="text-align:center">Copyright &copy; 2021 All rights reserved. </p>

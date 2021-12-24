@@ -4,6 +4,7 @@ import { Observable, BehaviorSubject } from 'rxjs';
 import { User } from './models/user';
 import { Recipe } from './models/recipe';
 
+
 @Injectable({
   providedIn: 'root'
 })
@@ -12,52 +13,74 @@ export class ApiService {
   private baseUrl = "http://localhost/web-app/backend/api/";
 
   private GET_ALL_RECIPES_URL = `${this.baseUrl}database.php?query=recipe`;
-  private SAVE_RECIPE_URL = `${this.baseUrl}database.php?query=new-recipe`;
-  private UPDATE_RECIPE_URL = `${this.baseUrl}database.php?query=set-recipe`;
-  private LOGIN_URL = `${this.baseUrl}database.php?query=`;
+ // private GET_ALL_COMMENTS_URL = `${this.baseUrl}database.php?query=user`;
+  private GET_COMMENTS_BY_RECIPE_URL = `${this.baseUrl}database.php?query=get-comm&id_recipe=`;
+  private GET_RECIPE_BY_ID_URL = `${this.baseUrl}database.php?query=get-recipeId&id_recipe=`;
+
+  private SAVE_RECIPE_URL = `${this.baseUrl}database.php`;
+  private ADD_COMMENTS_URL = `${this.baseUrl}database.php`;
+
+  private UPDATE_RECIPE_URL = `${this.baseUrl}database.php`;
+  private LOGIN_ADMIN_URL = `${this.baseUrl}database.php?query=get-admin`;
+
+  private DELETE_RECIPE_BY_ID_URL = `${this.baseUrl}database.php`;
 
 
-  public user = new BehaviorSubject({ idRole: null, pass: null, email: null });
+  public user = new BehaviorSubject({ pass: '', email: '' });
+  public recipeId = new BehaviorSubject<string>("");
 
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient) { 
   }
 
 
   getAllRecipes(): Observable<any> {
     return this.http.get<any>(this.GET_ALL_RECIPES_URL);
   }
- 
-  saveRecipe(recipe: Recipe): Observable<any> {
-    let headers = new HttpHeaders({
-      'Access-Control-Allow-Origin': " *",
-      'Access-Control-Allow-Headers': "X-Requested-With, Content-Type, Origin, Authorization, Accept, Client-Security-Token, Accept-Encoding",
-      'Access-Control-Allow-Methods': "POST, GET, OPTIONS, DELETE, PUT"      
-  
-    });
-    let options = { headers: headers }
-    return this.http.post<any>(this.SAVE_RECIPE_URL, recipe, options);
 
+  getRecipeById(id:any): Observable<any> {
+    return this.http.get<any>(this.GET_RECIPE_BY_ID_URL + `${id}`);
+  }
+
+  // public getRecipeById(): Observable<string> {
+  //   return this.recipeId.asObservable();
+  // }
+
+  saveRecipe(recipe: Recipe): Observable<any> {
+    recipe.query = "new-recipe";
+    return this.http.post('/api/database.php', recipe);
   }
 
   updateRecipe(recipe: Recipe): Observable<any> {
-    let headers = new HttpHeaders({
-      'Access-Control-Allow-Origin': ' *',
-      'Access-Control-Allow-Methods': ' GET, POST, PATCH, PUT, DELETE, OPTIONS',
-      'Access-Control-Allow-Headers': 'Origin, Content-Type, X-Auth-Token'
-    });
-    let options = { headers: headers }
-    return this.http.put(this.UPDATE_RECIPE_URL, recipe, options);
+    recipe.query = "set-recipe";
+    //recipe.id = id;
+    return this.http.put('/api/database.php', recipe);
   }
 
-  login(user: User): Observable<any> {
-    let headers = new HttpHeaders({
-      'Access-Control-Allow-Origin': ' *',
-      'Access-Control-Allow-Methods': ' GET, POST, PATCH, PUT, DELETE, OPTIONS',
-      'Access-Control-Allow-Headers': 'Origin, Content-Type, X-Auth-Token'
-    });
-    let options = { headers: headers }
-    return this.http.post<any>("http://localhost/web-app/backend/api/database.php?query= ", user, options)
+  deleteRecipeById(recipe: Recipe): Observable<any> {
+    const r = {
+      query: "remove-recipe",
+      id_recipe: recipe.id_recipe
+    }
+    return this.http.post('/api/database.php', r);
+  }
+
+  // getAllComments(): Observable<any> {
+  //   return this.http.get<any>(this.GET_ALL_COMMENTS_URL);
+  // }
+
+  getCommentsByRecipe(id: any): Observable<any> {
+    return this.http.get<any>(this.GET_COMMENTS_BY_RECIPE_URL + `${id}`);
+  }
+
+  addComment(user: User): Observable<any> {
+    user.query = "add-comm";
+    return this.http.post('/api/database.php', user);
+  }
+
+  
+  login(email: string, password: string): Observable<any> {
+    return this.http.get<any>(`${this.LOGIN_ADMIN_URL}&email=${email}&password=${password}`);
   }
 }
 

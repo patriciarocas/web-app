@@ -10,162 +10,154 @@
 </head>
 
 <body>
-  <!-- Admin login -->
-  <div class="panel panel-info">
-    <div class="panel-heading">
-      <h4 style="text-align:center">Login</h4>
-    </div>
-    </div>
-  <div class="container">
-    <div class="row">
-      <div class="col-md-6">
-        <form (ngSubmit)="adminLogin()">
-          <div class="form-group">
-            <label for="email">Email:</label>
-            <input [(ngModel)]="model.email" type="email" class="form-control" id="email" placeholder="Enter email"
-              name="email" required>
-
-          </div>
-          <div class="form-group">
-            <label for="pwd">Password:</label>
-            <input [(ngModel)]="model.password" type="password" class="form-control" id="pwd"
-              placeholder="Enter password" name="password" required>
-          </div>
-          <button type="submit" class="signinbtn">Sign-in</button>
-        </form>
+  <div class="card-text">
+    <div class="row-md-3">
+      <div class="d-flex flex-column align-items-center text-center ">
+        <img class="rounded-circle mt-5" src="assets/avatarr.png" width="100">You are logged as: ADMIN
       </div>
     </div>
   </div>
-
-  <!-- Add recipe -->
-  <div class="panel panel-info">
-    <div class="panel-heading">
-      <h4 style="text-align:center">Add Recipe</h4>
+  <br>
+  <div id="card-recipe">
+    <div id="add-recipe">
+      <img src="assets/add.png" alt="Image" width="200px" (click)="formAddRecipe()" style="cursor: pointer;">
+      <b>Add Recipes</b>
+    </div>
+    <div id="manage-recipe">
+      <img src="assets/manage.jpg" alt="Image" width="200px" (click)="toggleRecipe()" style="cursor: pointer;">
+      <b>Manage Recipes
+      </b>
     </div>
   </div>
-  <div class="container">
+  <br>
+
+  <!-- Add recipe -->
+  <div class="container" *ngIf="showRec">
     <form name="form" #f="ngForm" (ngSubmit)="f.form.valid && addRecipe()">
-      <div class="row">
-        <div class="col-md-6">
-          <!--Recipe name -->
-          <div class="form-group">
-            <label for="name_recipe">Recipe Name</label>
-            <input type="text" id="name_recipe" class="form-control" name="name_recipe" placeholder="Recipe Name"
-              [(ngModel)]="modelRec.name_recipe" #name_recipe="ngModel"
-              [ngClass]="{ 'is-invalid': f.submitted && name_recipe.invalid }" required name_recipe />
-            <!-- input validation group -->
-            <div *ngIf="f.submitted && name_recipe.invalid" class="invalid-input">
-              <!-- individual validation errors -->
-              <div *ngIf="name_recipe.errors?.['required']">Field is required</div>
-            </div>
-
-            <!-- Ingredients -->
-            <div class="form-group">
-              <label for="ingredients">Ingredients</label>
-              <input type="text" id="ingredients" class="form-control" name="ingredients"
-                placeholder="Recipe ingredients" [(ngModel)]="modelRec.ingredients" #ingredients="ngModel"
-                [ngClass]="{ 'is-invalid': f.submitted && ingredients.invalid }" required ingredients />
-              <!-- input validation group -->
-              <div *ngIf="f.submitted && ingredients.invalid" class="invalid-input">
-                <!-- individual validation errors -->
-                <div *ngIf="ingredients.errors?.['required']">Field is required</div>
-              </div>
-            </div>
-
-            <!-- Description -->
-            <div class="form-group">
-              <label for="description">Hire Date</label>
-              <input type="text" id="description" class="form-control" name="description"
-                placeholder="Recipe description" [(ngModel)]="modelRec.description" #description="ngModel"
-                [ngClass]="{ 'is-invalid': f.submitted && description.invalid }" required description />
-              <!-- input validation group -->
-              <div *ngIf="f.submitted && description.invalid" class="invalid-input">
-                <!-- individual validation errors -->
-                <div *ngIf="description.errors?.['required']">Field is required</div>
-              </div>
-            </div>
-
-            <!-- Macros-->
-            <div class="form-group">
-              <label for="macros">Macros</label>
-              <input type="text" id="macros" class="form-control" name="macros" placeholder="Recipe Macros"
-                [(ngModel)]="modelRec.macros" #macros="ngModel"
-                [ngClass]="{ 'is-invalid': f.submitted && macros.invalid }" required macros />
-              <!-- input validation group -->
-              <div *ngIf="f.submitted && macros.invalid" class="invalid-input">
-                <!-- individual validation errors -->
-                <div *ngIf="macros.errors?.['required']">Field is required</div>
-              </div>
-            </div>
-
-            <!-- Image-->
-            <div class="form-group">
-              <label for="image">Image</label>
-              <input type="text" id="image" class="form-control" name="image" placeholder="Image path"
-                [(ngModel)]="modelRec.image" #image="ngModel" [ngClass]="{ 'is-invalid': f.submitted && image.invalid }"
-                required image />
-              <!-- input validation group -->
-              <div *ngIf="f.submitted && image.invalid" class="invalid-input">
-                <!-- individual validation errors -->
-                <div *ngIf="image.errors?.['required']">Field is required</div>
-              </div>
-            </div>
-            <button type="submit" class="btn btn-info pull-right"> Submit
-            </button>
+      <!--Recipe name -->
+      <div class="form-group">
+        <label for="name_recipe">Recipe Name</label>
+        <input type="text" id="name_recipe" class="form-control" name="name_recipe" placeholder="Recipe Name"
+          [(ngModel)]="modelRec.name_recipe" #name_recipe="ngModel"
+          [ngClass]="{ 'is-invalid': f.submitted && name_recipe.invalid }" required name_recipe />
+        <!-- input validation group -->
+        <div *ngIf="f.submitted && name_recipe.invalid" class="invalid-input">
+          <!-- individual validation errors -->
+          <div *ngIf="name_recipe.errors?.['required']">Field is required</div>
+        </div>
+        <!-- Ingredients -->
+        <div class="form-group">
+          <label for="ingredients">Ingredients</label>
+          <input type="text" id="ingredients" class="form-control" name="ingredients" placeholder="Recipe ingredients"
+            [(ngModel)]="modelRec.ingredients" #ingredients="ngModel"
+            [ngClass]="{ 'is-invalid': f.submitted && ingredients.invalid }" required ingredients />
+          <!-- input validation group -->
+          <div *ngIf="f.submitted && ingredients.invalid" class="invalid-input">
+            <!-- individual validation errors -->
+            <div *ngIf="ingredients.errors?.['required']">Field is required</div>
           </div>
         </div>
+        <!-- Description -->
+        <div class="form-group">
+          <label for="description">Description</label>
+          <input type="text" id="description" class="form-control" name="description" placeholder="Recipe description"
+            [(ngModel)]="modelRec.description" #description="ngModel"
+            [ngClass]="{ 'is-invalid': f.submitted && description.invalid }" required description />
+          <!-- input validation group -->
+          <div *ngIf="f.submitted && description.invalid" class="invalid-input">
+            <!-- individual validation errors -->
+            <div *ngIf="description.errors?.['required']">Field is required</div>
+          </div>
+        </div>
+        <!-- Macros-->
+        <div class="form-group">
+          <label for="macros">Macros</label>
+          <input type="text" id="macros" class="form-control" name="macros" placeholder="Recipe Macros"
+            [(ngModel)]="modelRec.macros" #macros="ngModel" [ngClass]="{ 'is-invalid': f.submitted && macros.invalid }"
+            required macros />
+          <!-- input validation group -->
+          <div *ngIf="f.submitted && macros.invalid" class="invalid-input">
+            <!-- individual validation errors -->
+            <div *ngIf="macros.errors?.['required']">Field is required</div>
+          </div>
+        </div>
+        <!-- Image-->
+        <div class="form-group">
+          <label for="image">Image</label>
+          <input type="text" id="image" class="form-control" name="image" placeholder="Image path"
+            [(ngModel)]="modelRec.image" #image="ngModel" [ngClass]="{ 'is-invalid': f.submitted && image.invalid }"
+            required image />
+          <!-- input validation group -->
+          <div *ngIf="f.submitted && image.invalid" class="invalid-input">
+            <!-- individual validation errors -->
+            <div *ngIf="image.errors?.['required']">Field is required</div>
+          </div>
+        </div>
+        <button type="submit" class="submitbtn"> Submit
+        </button>
       </div>
     </form>
   </div>
 
-  <!-- Update recipe -->
-  <div class="panel panel-info">
-  <div class="panel-heading">
-    <h4 style="text-align:center">Update Recipe</h4>
-  </div>
-<!-- </div>
-  <div class="container">
-    <div class="row">
-      <div class="col-md-12">
-        <form name="form" #f="ngForm">
-          <div class="row mt-2">
-            <div class="col-md-6"><label class="labels">Recipe Name</label>
-              <input type="text" id="name_recipeUP" class="form-control" name="name_recipe"
-                [(ngModel)]='currentRecipe.name_recipe' />
-            </div>
-          </div>
-          <div class="row mt-2">
-            <div class="col-md-6"><label class="labels">Ingredients</label>
-              <input type="text" id="ingredientsUP" class="form-control" name="ingredients"
-                [(ngModel)]='currentRecipe.ingredients' />
-            </div>
-          </div>
-          <div class="row mt-2">
-            <div class="col-md-6"><label class="labels">Description</label>
-              <input type="text" id="descriptonUP" class="form-control" name="description"
-                [(ngModel)]='currentRecipe.description' />
-            </div>
-          </div>
-          <div class="row mt-2">
-            <div class="col-md-6"><label class="labels">Macros</label>
-              <input type="text" id="macrosUP" class="form-control" name="macros"
-                [(ngModel)]='currentRecipe.macros' />
-            </div>
-          </div>
-          <div class="row mt-2">
-            <div class="col-md-6"><label class="labels">Image</label>
-              <input type="text" id="imageUP" class="form-control" name="assistant"
-                [(ngModel)]='currentRecipe.image' />
-            </div>
-          </div>
-          <br>
-          <br>
-            <button class="btn btn-primary" (click)="updateRecipe(currentRecipe)" 
-              type="button">Save Changes</button>
-        </form>
+  <!-- Display all recipes to admin-->
+  <br>
+  <div class="row" *ngIf="showRecipes">
+    <div *ngFor="let item of recipe" class="col-md-2 img-container">
+      <img class="card-img-top" [src]="item.image" alt="Card image cap">
+      <div class="card-body">
+        <p class="card-title">{{item.name_recipe}}</p>
       </div>
-    </div>-->
-</div>
+      <button class="btn btn-info" type="button" id="btn" (click)="deleteRecipe(item)">
+        Delete Recipe
+      </button>
+      <button class="btn btn-info" type="button" id="btn" (click)="getRecipeById(item)">
+        Update Recipe
+      </button>
+    </div>
+  </div>
+  <div *ngIf="recipeId">
+    <form #f="ngForm">
+      <div class="card">
+        <!-- <input value={{rec.id_recipe}} name="id" id="id" /> -->
+        <!-- <img class="card-img-top" [src]="recipeId.image" alt="Card image cap" style="width: 300px; "> -->
+        <div class="card-body">
+          <h6>Recipe Name</h6>
+          <textarea style="width:100%; height:100%;" value={{recipeId.name_recipe}} name="name" id="name"></textarea>
+          <!-- <input class="card-title" value="{{rec.name_recipe}}" /> -->
+          <p class="card-text"></p>
+          <h6>Ingredients</h6>
+          <textarea style="width:100%; height:100%;" value={{recipeId.ingredients}} name="ingredients"
+            id="ingredients"></textarea>
+          <!-- <input style="width:100%; height:100%; text-align:start;" value="{{rec.ingredients}}" /> -->
+        </div>
+        <div class="card-footer">
+          <small class="text-muted">
+            <h6>Step-by-step instruction</h6>
+            <textarea style="width:100%; height:100%;" value={{recipeId.description}} name="description"
+              id="description"></textarea>
+            <!-- <input style="width:100%; height:100%; text-align:start;" value="{{rec.description}}" /> -->
+          </small>
+        </div>
+        <div class="card-body">
+          <small>
+            <h6>Macros</h6>
+            <textarea style="width:100%; height:100%;" value={{recipeId.macros}} name="macros" id="macros"></textarea>
+            <!-- <input style="width:100%; height:100%; text-align:start;" value="{{rec.macros}}" /> -->
+          </small>
+        </div>
+        <div class="card-footer">
+          <small class="text-muted">
+            <h6>Image path</h6>
+            <textarea style="width:100%; height:100%;" value={{recipeId.image}} name="image" id="imagee"></textarea>
+          </small>
+        </div>
+        <!-- Update -->
+        <button class="btn btn-info" type="submit" id="btn" (click)="updateRecipe(recipeId)">
+          Save Changes
+        </button>
+      </div>
+    </form>
+  </div>
 
 </body>
 

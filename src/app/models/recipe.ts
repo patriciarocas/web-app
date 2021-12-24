@@ -1,6 +1,6 @@
 export interface Recipe{
-    query: string;
-    id_recipe:string;
+    id_recipe?: string;
+    query?:string;
     name_recipe:string;
     ingredients:string;
     description:string;

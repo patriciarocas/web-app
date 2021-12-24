@@ -12,19 +12,19 @@
 <body>
   <br>
   
-  <div> <a style="text-align: center;" class="list-group-item list-group-item-action disabled">
+  <div style="padding: 20px;"> <a style="text-align: center;" class="list-group-item list-group-item-action disabled">
       <i>Each of us has a passion that makes sense when you show it to the world and is appreciated by others.
         <br>
         Welcome to our sweet world!</i>
     </a></div>
 
   <br>
-  <div id="card">
+  <div class="carousel">
     <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
       <div class="carousel-inner">
         <!-- ngfor loop using get dynamic value and ngclass for add active class -->
         <div class="carousel-item" *ngFor="let result of data; let i = index" [ngClass]="{'active': i === 1}">
-          <img src={{result.img}} title={{result.title}}  />
+          <img id="img-id" src={{result.img}} title={{result.title}}  />
         </div>
       </div>
       <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
@@ -41,7 +41,7 @@
   </div>
   <br><br>
   <!-- ************************************************************************************************ -->
-  <div id="contact-info" class="list-group border-warning">
+  <div id="contact-info" class="list-group border-warning"  style="padding: 20px;">
     <div> <a style="text-align: center;" class="list-group-item list-group-item-action disabled">Fell free to write your story
         about us on our email: cake.app@gmail.com
       </a></div>
