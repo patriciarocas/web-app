@@ -4,7 +4,6 @@ import { HomeComponent } from './home/home.component';
 import { AboutComponent } from './about/about.component';
 import { RecipeComponent } from './recipe/recipe.component';
 import { AdminComponent } from './admin/admin.component';
-import { RecipeDetailsComponent } from './recipe-details/recipe-details.component';
 import { LoginComponent } from './login/login.component';
 
 const routes: Routes = [
@@ -24,11 +23,6 @@ const routes: Routes = [
   {
     path: 'recipe',
     component: RecipeComponent
-  },
-  {
-    path: 'recipe-details',
-    component: RecipeDetailsComponent,
-    pathMatch: 'full'
   },
   {
     path: 'admin',

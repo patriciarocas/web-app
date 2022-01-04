@@ -18,7 +18,10 @@ export class RecipeComponent implements OnInit {
 
   currentDate = new Date();
   pipe = new DatePipe('en-US');
- 
+  testDate = this.pipe.transform(this.currentDate, "yyyy-MM-dd'T'HH:mm:ss");
+  currentDateRec = this.pipe.transform(this.currentDate, 'MM/dd/yyyy');
+  data : Recipe[] = [];
+
 
   constructor(private apiService: ApiService) { }
 
@@ -48,10 +51,11 @@ export class RecipeComponent implements OnInit {
 
   addComment() {
     this.model.id_recipe = "" + this.id;
-    console.log(this.id);
+    this.model.date = this.testDate!;
     this.apiService.addComment(this.model).subscribe(
       res => {
         alert("Comment added successfuly");
+        this.getCommentsByRecipe(this.id);
       },
       err => {
         alert("Error occurred while add comm!");
@@ -87,5 +91,5 @@ export interface User {
   email: string;
   comments: string;
   id_recipe: string;
-  date:string;
+  date: string;
 }

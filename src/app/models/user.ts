@@ -5,5 +5,4 @@ export interface User{
   comments: string;
   id_recipe: string;
   date: string;
-  
 }

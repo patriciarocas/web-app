@@ -15,9 +15,18 @@ export class NavigationComponent implements OnInit {
   constructor(private router: Router, private apiService: ApiService) { }
 
   ngOnInit(): void {
+    this.apiService.admin.subscribe(admin => {
+      if (admin.email && admin.pass) {
+        this.isLogged = true;
+      } else {
+        this.isLogged = false;
+      }
+    });
   }
 
 
-  logoutAdmin(){
+  logoutAdmin() {
+    this.isLogged = false;
+    this.router.navigate(['./login']);
   }
 }

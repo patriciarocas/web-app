@@ -5,11 +5,11 @@ $queries = array( // declare here all the queries
     'recipe'         => 'select * from recipe', //get
     'get-recipeId'   => 'select * from recipe where id_recipe = ?', //get recipe by id
     'new-recipe'     => 'insert into recipe(name_recipe, ingredients, description, macros, image) values(?, ?, ?, ?, ?)', //add
-    'set-recipe'     => 'update recipe set name_recipe=?, ingredients=?, description=?, macros=?, image=? where id_recipe=?', //update
+    'update-recipe'  => 'update recipe set name_recipe=?, ingredients=?, description=?, macros=?, image=? where id_recipe=?', //update
     'remove-recipe'  => 'delete from recipe where id_recipe = ? ', //remove
-    'get-comm'       => 'select name_user, comments from user where id_recipe = ?', //get comm
-    'add-comm'       => 'insert into user(name_user, email, comments, id_recipe, date ) values (?, ?, ?, ?, ?)', //add comm
-    'get-admin'      => 'select * from admin where email=? and password=?',
+    'get-comm'       => 'select * from user where id_recipe = ?', //get comm
+    'add-comm'       => 'insert into user(name_user, email, comments, id_recipe, date) values (?, ?, ?, ?, ?)', //add comm
+    'get-admin'      => 'select * from admin where email=? and password=?', //get comm
 
 ); 
 

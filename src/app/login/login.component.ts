@@ -9,23 +9,24 @@ import { ApiService } from '../api.service';
 })
 export class LoginComponent implements OnInit {
 
-  constructor(  private router: Router,
-     private apiService: ApiService) { }
+  constructor(private router: Router,
+    private apiService: ApiService) { }
 
   ngOnInit(): void {
   }
 
-  adminLogin(){
+  adminLogin() {
     this.apiService.login(this.model.email, this.model.password).subscribe(
-    res =>{
-      if(res){
-        this.router.navigate(['./admin']);
-      }else {
-       alert("Error when login!");
-      }
-    }, err => {
-      // console.log("Error...");
-    });
+      res => {
+        if (res) {
+          this.router.navigate(['./admin']);
+          this.apiService.admin.next({ pass: this.model.password, email: this.model.email });
+        } else {
+          alert("Error when login!");
+        }
+      }, err => {
+        alert("Error when login!");
+      });
   }
 
   model: adminModel = {

@@ -24,8 +24,9 @@
         <div class="container">
             <div class="card" *ngIf="!recipeId">
                 <img src="assets/images.jpg"><br>
-                <b>Feel free to try this beautiful recipes</b>
-                <p> Just click on the image of the desired recipe and let yourself be carried away by the culinary
+                <b style="text-align: center;">Feel free to try all this delicious recipes</b>
+                <p style="margin-left: 10px;"> Just click on the image of the desired recipe and let yourself be carried
+                    away by the culinary
                     desires.
                 </p>
             </div>
@@ -43,21 +44,22 @@
                         <p style="text-align:justify">{{recipeId.description}}</p>
                     </small>
                 </div>
-                <div>
+                <div class="card-body">
                     <small style="text-align:justify">
+                        <h6>Nutritional values</h6>
                         {{recipeId.macros}}
                     </small>
                 </div>
                 <hr>
-                <p style="text-align: center;">Comments </p> 
+                <p style="text-align: center;">Comments </p>
                 <div *ngFor="let comm of commentsByRecipe">
                     <i class='fa fa-user-circle'></i>
                     {{comm.name_user}}
                     <small>
                         <p style="font-family: Arial; font-size: 10px;">
-                            Date: {{currentDate | date:'dd-MM-yyyy'}}</p>
+                            Date: {{comm.date | date:'medium':'UTC' }}</p>
                     </small>
-                        <ul>{{comm.comments}} </ul>
+                    <ul>{{comm.comments}} </ul>
                     <hr>
                 </div>
                 <!-- Add comment to recipe -->

@@ -22,7 +22,7 @@
                 <li class="nav-item">
                     <a class="nav-link fa fa-bookmark" routerLink="/about">About</a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item" *ngIf="!isLogged">
                     <a class="nav-link fa fa-sign-in" routerLink="/login"> Admin</a>
                 </li>
                 <li class="nav-item" *ngIf="isLogged">

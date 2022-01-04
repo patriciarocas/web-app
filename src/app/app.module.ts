@@ -11,7 +11,6 @@ import { AboutComponent } from './about/about.component';
 import { RecipeComponent } from './recipe/recipe.component';
 import { AdminComponent } from './admin/admin.component';
 import { ReactiveFormsModule } from '@angular/forms';
-import { RecipeDetailsComponent } from './recipe-details/recipe-details.component';
 import { LoginComponent } from './login/login.component';
 
 
@@ -23,7 +22,6 @@ import { LoginComponent } from './login/login.component';
     AboutComponent,
     RecipeComponent,
     AdminComponent,
-    RecipeDetailsComponent,
     LoginComponent
     ],
   imports: [

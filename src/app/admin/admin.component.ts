@@ -19,6 +19,7 @@ export class AdminComponent implements OnInit {
   updateRec: boolean = false;
   recipeId!: Recipe;
 
+
   constructor(private apiService: ApiService, private router: Router) {
 
   }
@@ -28,11 +29,11 @@ export class AdminComponent implements OnInit {
   }
 
 
-  toggleRecipe() {
+  manageRecipe() {
     this.showRecipes = !this.showRecipes;
     this.getAllRecipes();
-
   }
+
   formAddRecipe() {
     this.showRec = !this.showRec;
   }
@@ -40,7 +41,6 @@ export class AdminComponent implements OnInit {
   public getAllRecipes() {
     this.apiService.getAllRecipes().subscribe(
       res => {
-        // this.currentRecipe = res;
         this.recipe = res;
       },
       err => {
@@ -51,9 +51,15 @@ export class AdminComponent implements OnInit {
 
   public getRecipeById(recipe: Recipe) {
     this.recipeId = recipe;
-    console.log("recipe by id", this.recipeId);
     this.apiService.recipeId.next(recipe.id_recipe!);
-
+    this.apiService.getRecipeById(recipe.id_recipe).subscribe(
+      res => {
+        this.currentRecipe = res;
+      },
+      err => {
+        alert('Err when get recipe by id');
+      }
+    )
   }
 
   public addRecipe() {
@@ -68,20 +74,18 @@ export class AdminComponent implements OnInit {
     );
   }
 
-  public updateRecipe(recipe: Recipe) {
+  public updateRecipe(form: NgForm) {
     let recObj = {
-      id_recipe: '',
-      query: 'set-recipe',
-      name_recipe: '',
-      ingredients: '',
-      description: '',
-      macros: '',
-      image: ''
+      query: 'update-recipe',
+      name_recipe: form.controls['name_recipe'].value,
+      ingredients: form.controls['ingredients'].value,
+      description: form.controls['description'].value,
+      macros: form.controls['macros'].value,
+      image: form.controls['image'].value,
+      id_recipe: this.recipeId.id_recipe
     }
-    this.apiService.updateRecipe(recipe).subscribe(
+    this.apiService.updateRecipe(recObj).subscribe(
       res => {
-        this.currentRecipe = res;
-        console.log("current rec", this.currentRecipe);
         alert("Recipe has been changed successfully!");
       },
       err => {
@@ -117,7 +121,6 @@ export class AdminComponent implements OnInit {
 
   //get data from recipe and save in currentRecipe
   currentRecipe = {
-    query: '',
     id_recipe: '',
     name_recipe: '',
     ingredients: '',
